@@ -35,45 +35,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public List<Bitmap> getImageList() {
+    /*public List<Bitmap> getImageList() {
         List<Bitmap> images = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image1);
             images.add(bitmap);
         }
         return images;
-    }
+    }*/
 
     private void populateEmployeeList() {
 
-        Employee employee1 = new Employee("Mahesh Kumar", "Associate","Marketing","Mahesh_Kumar@gmail.com",  9123456789L,22000);
+        Employee employee1 = new Employee("Mahesh Kumar", "Associate","Marketing","Mahesh_Kumar@gmail.com",  9123456789L,22000, BitmapFactory.decodeResource(getResources(), R.drawable.image1));
         employeeList.add(employee1);
 
-        Employee employee2 = new Employee("Akhila Sahiti", "Team Lead","Technology","sahiti_akhila@yahoo.com",9893120883L,21000);
+        Employee employee2 = new Employee("Akhila Sahiti", "Team Lead","Technology","sahiti_akhila@yahoo.com",9893120883L,21000, BitmapFactory.decodeResource(getResources(), R.drawable.image2));
         employeeList.add(employee2);
 
-        Employee employee3 = new Employee("Ramya Singh", "Assistant Director","Design","ramya123@gmail.com",7587796811L,25000);
+        Employee employee3 = new Employee("Ramya Singh", "Assistant Director","Design","ramya123@gmail.com",7587796811L,25000, BitmapFactory.decodeResource(getResources(), R.drawable.image3));
         employeeList.add(employee3);
 
-        Employee employee4 = new Employee("Anurag Paul", "Team Lead","Sales","anurag_paul@gmail.com",9789598769L,22000);
+        Employee employee4 = new Employee("Anurag Paul", "Team Lead","Sales","anurag_paul@gmail.com",9789598769L,22000, BitmapFactory.decodeResource(getResources(), R.drawable.image4));
         employeeList.add(employee4);
 
-        Employee employee5 = new Employee("Abhay Joshi", "Senior Manager","Technology","abhay@yahoo.com",9012340079L,27000);
+        Employee employee5 = new Employee("Abhay Joshi", "Senior Manager","Technology","abhay@yahoo.com",9012340079L,27000, BitmapFactory.decodeResource(getResources(), R.drawable.image5));
         employeeList.add(employee5);
 
-        Employee employee6 = new Employee("Lakshmi Bhadana", "Manager","Design","lksmi777@yahoo.com",9988123987L,23800);
+        Employee employee6 = new Employee("Lakshmi Bhadana", "Manager","Design","lksmi777@yahoo.com",9988123987L,23800, BitmapFactory.decodeResource(getResources(), R.drawable.image6));
         employeeList.add(employee6);
 
-        Employee employee7 = new Employee("Leela krishna", "Associate","Marketing","leela@gmail.com",7995887001L,21000);
+        Employee employee7 = new Employee("Leela krishna", "Associate","Marketing","leela@gmail.com",7995887001L,21000, BitmapFactory.decodeResource(getResources(), R.drawable.image7));
         employeeList.add(employee7);
 
-        Employee employee8 = new Employee("Sai Kiran", "Directory","Sales","kiran987@email.com",9123456789L,22000);
+        Employee employee8 = new Employee("Sai Kiran", "Directory","Sales","kiran987@email.com",9123456789L,22000, BitmapFactory.decodeResource(getResources(), R.drawable.image8));
         employeeList.add(employee8);
 
-        Employee employee9 = new Employee("Rajesh Khanna", "Junior Manager","Developer","rajesh@yahoo.com",9123456789L,29000);
+        Employee employee9 = new Employee("Rajesh Khanna", "Junior Manager","Developer","rajesh@yahoo.com",9123456789L,29000, BitmapFactory.decodeResource(getResources(), R.drawable.image9));
         employeeList.add(employee9);
 
-        Employee employee10 = new Employee("Mayaa Rajput", "Team Lead","Marketing","mayarajput@yahoo.com",9993079099L,22500);
+        Employee employee10 = new Employee("Mayaa Rajput", "Team Lead","Marketing","mayarajput@yahoo.com",9993079099L,22500, BitmapFactory.decodeResource(getResources(), R.drawable.image10));
         employeeList.add(employee10);
         employeeAdapter.notifyDataSetChanged();
         /*employee1.setName("Sahiti");
