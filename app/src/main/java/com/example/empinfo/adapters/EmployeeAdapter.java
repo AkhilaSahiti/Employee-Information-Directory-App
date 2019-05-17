@@ -17,6 +17,7 @@ import com.example.empinfo.EmployeeDetailsActivity;
 import com.example.empinfo.R;
 import com.example.empinfo.models.Employee;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -80,9 +81,9 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
        });
        viewHolder.click.setOnClickListener(new View.OnClickListener() {
            @Override
-           public void onClick(View v) {
+           public void onClick(View view) {
                Employee employee = employeeList.get(position);
-               Intent intent = new Intent(v.getContext(), EmployeeDetailsActivity.class);
+               Intent intent = new Intent(view.getContext(), EmployeeDetailsActivity.class);
                intent.putExtra("urname",employee.getName());
                intent.putExtra("urdesignation",employee.getDesignation());
                intent.putExtra("urfield",employee.getField());
@@ -90,7 +91,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
                intent.putExtra("urphone",String.valueOf(employee.getPhone()));
                intent.putExtra("ursalary",String.valueOf(employee.getSalary()));
               // intent.putExtra("urphoto",employee.getPhoto());
-               v.getContext().startActivity(intent);
+
+               /*Bitmap bitmap=employee.getPhoto();
+               ByteArrayOutputStream baos = new ByteArrayOutputStream();
+               bitmap.compress(Bitmap.CompressFormat.PNG, 50, baos);
+               intent.putExtra("urphoto", baos.toByteArray());*/
+               view.getContext().startActivity(intent);
            }
        });
     }

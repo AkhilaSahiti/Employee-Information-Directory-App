@@ -1,9 +1,12 @@
 package com.example.empinfo;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EmployeeDetailsActivity extends AppCompatActivity {
 
@@ -53,6 +57,12 @@ public class EmployeeDetailsActivity extends AppCompatActivity {
        // Bitmap bitmap = (Bitmap) intent.getParcelableExtra("urphoto");
        // image.setImageBitmap(bitmap);
 
+        if(getIntent().hasExtra("urphoto")) {
+            ImageView imageView = new ImageView(this);
+            Bitmap bmp = BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra("yourImage"), 0, getIntent().getByteArrayExtra("yourImage").length);
+            imageView.setImageBitmap(bmp);
+        }
+
         emailbtn = (ImageButton) findViewById(R.id.emailbtn);
         emailbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +70,7 @@ public class EmployeeDetailsActivity extends AppCompatActivity {
                 onemail();
             }
         });
+
         messagebtn = (ImageButton) findViewById(R.id.messagebtn);
         messagebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +78,7 @@ public class EmployeeDetailsActivity extends AppCompatActivity {
                 onsms();
             }
         });
+
         phonebtn = (ImageButton) findViewById(R.id.phonebtn);
         phonebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,15 +91,11 @@ public class EmployeeDetailsActivity extends AppCompatActivity {
 
     protected void onemail() {
 
-        Intent mailintent = new Intent(Intent.ACTION_SEND);
-        mailintent.setData(Uri.parse("mailto:"));
-        mailintent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data");
-        mailintent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname);
-        mailintent.putExtra(Intent.EXTRA_TEXT, "Designation: " + empdesignation);
-        mailintent.putExtra(Intent.EXTRA_TEXT, "Field: " + empfield);
-        mailintent.putExtra(Intent.EXTRA_TEXT, "Email: " + empemail);
-        mailintent.putExtra(Intent.EXTRA_TEXT, "Phone: " + empphone);
-        mailintent.putExtra(Intent.EXTRA_TEXT, "Salary: " + empsalary);
+        Intent mailintent = new Intent(Intent.ACTION_SENDTO);
+        mailintent.setType("text/html");
+        mailintent.setData(Uri.parse("mailto: racherlakhila@gmail.com"));
+        mailintent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data: ");
+        mailintent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname+ " has joined the " +empfield+" as "+ empdesignation+" with a monthly Salary of " + empsalary+". EmailId: " + empemail+" and Phone: " + empphone);
         startActivity(mailintent);
     }
 
@@ -95,28 +103,26 @@ public class EmployeeDetailsActivity extends AppCompatActivity {
 
         Intent smsintent = new Intent(Intent.ACTION_SEND);
         smsintent.setData(Uri.parse("sms:"));
-        smsintent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data");
-        smsintent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname);
-        smsintent.putExtra(Intent.EXTRA_TEXT, "Designation: " + empdesignation);
-        smsintent.putExtra(Intent.EXTRA_TEXT, "Field: " + empfield);
-        smsintent.putExtra(Intent.EXTRA_TEXT, "Email: " + empemail);
-        smsintent.putExtra(Intent.EXTRA_TEXT, "Phone: " + empphone);
-        smsintent.putExtra(Intent.EXTRA_TEXT, "Salary: " + empsalary);
+        smsintent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data: ");
+        smsintent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname+  " has joined the " +empfield+" as "+ empdesignation+" with a monthly Salary of " + empsalary+". EmailId: " + empemail+" and Phone: " + empphone);
         startActivity(smsintent);
     }
 
     protected void onphone() {
 
-        Intent phonentent=new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        phonentent.setData(Uri.parse("content://contacts"));
-        phonentent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data");
-        phonentent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname);
-        phonentent.putExtra(Intent.EXTRA_TEXT, "Designation: " + empdesignation);
-        phonentent.putExtra(Intent.EXTRA_TEXT, "Field: " + empfield);
-        phonentent.putExtra(Intent.EXTRA_TEXT, "Email: " + empemail);
-        phonentent.putExtra(Intent.EXTRA_TEXT, "Phone: " + empphone);
-        phonentent.putExtra(Intent.EXTRA_TEXT, "Salary: " + empsalary);
-        startActivity(phonentent);
+
+        Intent phoneintent=new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        //phoneintent.setData(Uri.parse("content://contacts"));
+
+        /*phoneintent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data");
+        phoneintent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname);
+        phoneintent.putExtra(Intent.EXTRA_TEXT, "Designation: " + empdesignation);
+        phoneintent.putExtra(Intent.EXTRA_TEXT, "Field: " + empfield);
+        phoneintent.putExtra(Intent.EXTRA_TEXT, "Email: " + empemail);
+        phoneintent.putExtra(Intent.EXTRA_TEXT, "Phone: " + empphone);
+        phoneintent.putExtra(Intent.EXTRA_TEXT, "Salary: " + empsalary);*/
+
+        startActivity(phoneintent);
 
 
     }
