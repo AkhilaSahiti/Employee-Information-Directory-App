@@ -15,13 +15,14 @@ public class Employee {
 
 
 
-    public Employee(String name, String designation, String field, String email, long phone, double salary){
+    public Employee(String name, String designation, String field, String email, long phone, double salary, Bitmap photo){
         this.name=name;
         this.designation=designation;
         this.field=field;
         this.email=email;
         this.phone=phone;
         this.salary=salary;
+        this.photo=photo;
     }
 
     public Bitmap getPhoto() { return photo; }

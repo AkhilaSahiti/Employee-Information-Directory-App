@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="102dp"
         android:layout_height="94dp"
@@ -16,10 +16,10 @@
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="127dp"
+        android:layout_marginEnd="92dp"
         android:padding="10dp"
         android:singleLine="true"
-        android:src="@drawable/emp1">
+        android:src="@android:drawable/picture_frame">
 
     </ImageView>
 
@@ -27,56 +27,153 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="right"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="8dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/delete"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:hint="Name" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/designation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:hint="Designation" />
+            <TextView
+                android:id="@+id/emp_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Name: " />
 
-        <TextView
-            android:id="@+id/field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:hint="Field" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Name" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/email"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:hint="Email" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:hint="Phone"
-            android:inputType="number|phone" />
+            <TextView
+                android:id="@+id/emp_designation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Designation: " />
 
-        <TextView
-            android:id="@+id/salary"
+            <TextView
+                android:id="@+id/designation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Designation" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:hint="Salary"
-            android:inputType="number" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/emp_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Field: " />
+
+            <TextView
+                android:id="@+id/field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Field" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/emp_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Email: " />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Email" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/emp_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Phone: "
+                android:inputType="number|phone" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Phone"
+                android:inputType="number|phone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/emp_salary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Salary: "
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/salary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:hint="Salary"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/click"
+            android:layout_width="54dp"
+            android:layout_height="31dp"
+            android:padding="5dp"
+            android:text="click"/>
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="-4dp"
+        android:src="@android:drawable/ic_menu_delete" />
 
 
 </RelativeLayout>
