@@ -1,9 +1,5 @@
 package com.example.empinfo.adapters;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,46 +8,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.example.empinfo.EmployeeDetailsActivity;
+
+import com.example.empinfo.EmpInfo;
 import com.example.empinfo.R;
 import com.example.empinfo.models.Employee;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
-    private Context context;
     private List<Employee> employeeList;
+    private EmployeeAdapterCallback listener;
 
-
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imageView;
-        public TextView name, designation, field, email, phone, salary;
-        public ImageButton delete;
-        public Button click;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
-            name =(TextView) itemView.findViewById(R.id.name);
-            designation =(TextView) itemView.findViewById(R.id.designation);
-            field = (TextView) itemView.findViewById(R.id.field);
-            email = (TextView) itemView.findViewById(R.id.email);
-            phone = (TextView) itemView.findViewById(R.id.phone);
-            salary = (TextView) itemView.findViewById(R.id.salary);
-            delete = (ImageButton) itemView.findViewById(R.id.delete);
-            click = (Button) itemView.findViewById(R.id.click);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView);
-
-
-
-        }
+    public interface EmployeeAdapterCallback {
+        void onEmployeeClicked(Employee employee);
     }
-    public EmployeeAdapter(List<Employee> employeeList) {
+
+    public EmployeeAdapter(List<Employee> employeeList, EmployeeAdapterCallback listener) {
         this.employeeList = employeeList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -62,43 +38,29 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        Employee employee = employeeList.get(position);
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int position) {
+        Employee employee = employeeList.get(viewHolder.getAdapterPosition());
         viewHolder.name.setText(employee.getName());
         viewHolder.designation.setText(employee.getDesignation());
         viewHolder.field.setText(employee.getField());
-        viewHolder.email.setText(employee.getEmail());
-        viewHolder.phone.setText(String.valueOf(employee.getPhone()));
-        viewHolder.salary.setText(String.valueOf(employee.getSalary()));
-        viewHolder.imageView.setImageBitmap(employee.getPhoto());
-        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Employee removedItem = employeeList.get(position);
-               employeeList.remove(position);
-               notifyItemRemoved(position);
-           }
-       });
-       viewHolder.click.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Employee employee = employeeList.get(position);
-               Intent intent = new Intent(view.getContext(), EmployeeDetailsActivity.class);
-               intent.putExtra("urname",employee.getName());
-               intent.putExtra("urdesignation",employee.getDesignation());
-               intent.putExtra("urfield",employee.getField());
-               intent.putExtra("uremail",employee.getEmail());
-               intent.putExtra("urphone",String.valueOf(employee.getPhone()));
-               intent.putExtra("ursalary",String.valueOf(employee.getSalary()));
-              // intent.putExtra("urphoto",employee.getPhoto());
+        viewHolder.imageView.setImageResource(employee.getPhoto());
 
-               /*Bitmap bitmap=employee.getPhoto();
-               ByteArrayOutputStream baos = new ByteArrayOutputStream();
-               bitmap.compress(Bitmap.CompressFormat.PNG, 50, baos);
-               intent.putExtra("urphoto", baos.toByteArray());*/
-               view.getContext().startActivity(intent);
-           }
-       });
+        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Employee removedEmployee = employeeList.get(viewHolder.getAdapterPosition());
+                employeeList.remove(viewHolder.getAdapterPosition());
+                notifyItemRemoved(viewHolder.getAdapterPosition());
+                EmpInfo.getInstance().removeEmployee(removedEmployee);
+            }
+        });
+
+        viewHolder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onEmployeeClicked(employeeList.get(viewHolder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -106,5 +68,22 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
         return employeeList.size();
     }
 
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        TextView name, designation, field;
+        ImageButton delete;
+        Button click;
+        LinearLayout mainLayout;
 
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
+            name = (TextView) itemView.findViewById(R.id.name);
+            designation = (TextView) itemView.findViewById(R.id.designation);
+            field = (TextView) itemView.findViewById(R.id.field);
+            delete = (ImageButton) itemView.findViewById(R.id.delete);
+            imageView = (ImageView) itemView.findViewById(R.id.imageView);
+            mainLayout = (LinearLayout) itemView.findViewById(R.id.on_click);
+        }
+    }
 }

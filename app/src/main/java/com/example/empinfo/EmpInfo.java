@@ -3,10 +3,9 @@ package com.example.empinfo;
 import com.example.empinfo.models.Employee;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+//Singleton
 public class EmpInfo {
     private static final EmpInfo ourInstance = new EmpInfo();
     private List<Employee> employees = new ArrayList<>();
@@ -15,10 +14,17 @@ public class EmpInfo {
         return ourInstance;
     }
 
-    public void add(Employee employee) {
+    public void addEmployee(Employee employee) {
         employees.add(employee);
     }
 
-    public List<Employee> getEmployees() { return employees; }
+    public void removeEmployee(Employee employee){
+        employees.remove(employee);
+
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
 
 }

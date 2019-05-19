@@ -1,27 +1,18 @@
 package com.example.empinfo;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.Contacts;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.empinfo.models.Employee;
 
 public class EmployeeDetailsActivity extends AppCompatActivity {
-
-    String empname, empdesignation, empfield, empsalary, empemail, empphone;
-    ImageView image;
-    ImageButton emailbtn, messagebtn, phonebtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,99 +20,76 @@ public class EmployeeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_employee_details);
 
         Intent intent = getIntent();
+        final Employee employee = (Employee) intent.getSerializableExtra("employee");
 
-        empname = intent.getStringExtra("urname");
-        TextView name = (TextView) findViewById(R.id.emp_name);
-        name.setText(empname);
+        if (employee != null) {
+            TextView name = (TextView) findViewById(R.id.emp_name);
+            name.setText(employee.getName());
 
-        empdesignation = intent.getStringExtra("urdesignation");
-        TextView designation = (TextView) findViewById(R.id.emp_designation);
-        designation.setText(empdesignation);
+            TextView designation = (TextView) findViewById(R.id.emp_designation);
+            designation.setText(employee.getDesignation());
 
-        empfield = intent.getStringExtra("urfield");
-        TextView field = (TextView) findViewById(R.id.emp_field);
-        field.setText(empfield);
+            TextView field = (TextView) findViewById(R.id.emp_field);
+            field.setText(employee.getField());
 
-        empemail = intent.getStringExtra("uremail");
-        TextView email = (TextView) findViewById(R.id.emp_email);
-        email.setText(empemail);
+            TextView email = (TextView) findViewById(R.id.emp_email);
+            email.setText(employee.getEmail());
 
-        empphone = intent.getStringExtra("urphone");
-        TextView phone = (TextView) findViewById(R.id.emp_phone);
-        phone.setText(empphone);
+            TextView phone = (TextView) findViewById(R.id.emp_phone);
+            phone.setText(String.valueOf(employee.getPhone()));
 
-        empsalary = intent.getStringExtra("ursalary");
-        TextView salary = (TextView) findViewById(R.id.emp_salary);
-        salary.setText(empsalary);
+            TextView salary = (TextView) findViewById(R.id.emp_salary);
+            salary.setText(String.valueOf(employee.getSalary()));
 
-       // Bitmap bitmap = (Bitmap) intent.getParcelableExtra("urphoto");
-       // image.setImageBitmap(bitmap);
+            ImageView photo = (ImageView) findViewById(R.id.image);
+            photo.setImageResource(employee.getPhoto());
 
-        if(getIntent().hasExtra("urphoto")) {
-            ImageView imageView = new ImageView(this);
-            Bitmap bmp = BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra("yourImage"), 0, getIntent().getByteArrayExtra("yourImage").length);
-            imageView.setImageBitmap(bmp);
+            ImageButton emailbtn = (ImageButton) findViewById(R.id.emailbtn);
+            emailbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onemail(employee);
+                }
+            });
+
+            ImageButton messagebtn = (ImageButton) findViewById(R.id.messagebtn);
+            messagebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onsms(employee);
+                }
+            });
+
+            ImageButton phonebtn = (ImageButton) findViewById(R.id.phonebtn);
+            phonebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onphone();
+                }
+            });
         }
-
-        emailbtn = (ImageButton) findViewById(R.id.emailbtn);
-        emailbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onemail();
-            }
-        });
-
-        messagebtn = (ImageButton) findViewById(R.id.messagebtn);
-        messagebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onsms();
-            }
-        });
-
-        phonebtn = (ImageButton) findViewById(R.id.phonebtn);
-        phonebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onphone();
-            }
-        });
 
     }
 
-    protected void onemail() {
-
+    protected void onemail(Employee employee) {
         Intent mailintent = new Intent(Intent.ACTION_SENDTO);
         mailintent.setType("text/html");
         mailintent.setData(Uri.parse("mailto: racherlakhila@gmail.com"));
         mailintent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data: ");
-        mailintent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname+ " has joined the " +empfield+" as "+ empdesignation+" with a monthly Salary of " + empsalary+". EmailId: " + empemail+" and Phone: " + empphone);
+        mailintent.putExtra(Intent.EXTRA_TEXT, "Name: " + employee.getName() + " has joined the " + employee.getField() + " as " + employee.getDesignation() + " with a monthly Salary of " + employee.getSalary() + ". EmailId: " + employee.getEmail() + " and Phone: " + employee.getPhone());
         startActivity(mailintent);
     }
 
-    protected void onsms() {
-
+    protected void onsms(Employee employee) {
         Intent smsintent = new Intent(Intent.ACTION_SEND);
         smsintent.setData(Uri.parse("sms:"));
         smsintent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data: ");
-        smsintent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname+  " has joined the " +empfield+" as "+ empdesignation+" with a monthly Salary of " + empsalary+". EmailId: " + empemail+" and Phone: " + empphone);
+        smsintent.putExtra(Intent.EXTRA_TEXT, "Name: " + employee.getName() + " has joined the " + employee.getField() + " as " + employee.getDesignation() + " with a monthly Salary of " + employee.getSalary() + ". EmailId: " + employee.getEmail() + " and Phone: " + employee.getPhone());
         startActivity(smsintent);
     }
 
     protected void onphone() {
-
-
-        Intent phoneintent=new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        //phoneintent.setData(Uri.parse("content://contacts"));
-
-        /*phoneintent.putExtra(Intent.EXTRA_SUBJECT, "New Employee Data");
-        phoneintent.putExtra(Intent.EXTRA_TEXT, "Name: " + empname);
-        phoneintent.putExtra(Intent.EXTRA_TEXT, "Designation: " + empdesignation);
-        phoneintent.putExtra(Intent.EXTRA_TEXT, "Field: " + empfield);
-        phoneintent.putExtra(Intent.EXTRA_TEXT, "Email: " + empemail);
-        phoneintent.putExtra(Intent.EXTRA_TEXT, "Phone: " + empphone);
-        phoneintent.putExtra(Intent.EXTRA_TEXT, "Salary: " + empsalary);*/
-
+        Intent phoneintent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivity(phoneintent);
 
 
